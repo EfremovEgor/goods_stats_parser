@@ -15,6 +15,19 @@ import os
 from config import LOGIN_URL, BASE_URL, STARTING_ROW, AMOUNT_TO_PARSE
 
 
+def initialize_directories_and_files():
+    cwd = os.getcwd()
+    dirs = [os.path.join(cwd, "data"), os.path.join(cwd, "logs")]
+    files = [os.path.join(cwd, "data", "nomenclature.csv")]
+    for dir_ in dirs:
+        if not os.path.exists(dir_):
+            os.mkdir(dir_)
+    for file in files:
+        if not os.path.exists(dir_):
+            with open(file, "w"):
+                ...
+
+
 def login(driver: uc.Chrome) -> None:
     driver.get(LOGIN_URL)
     try:
@@ -67,7 +80,7 @@ def main(driver: uc.Chrome) -> None:
         counter = 0
         for row in reader:
             counter += 1
-            if not row[1] and counter <= STARTING_ROW:
+            if not row[1] or (counter < STARTING_ROW):
                 continue
             print(row[1], counter)
             html = get_item_page(row[1], driver=driver)
@@ -90,6 +103,8 @@ def main(driver: uc.Chrome) -> None:
 
 
 if __name__ == "__main__":
+    initialize_directories_and_files()
+    print(STARTING_ROW)
     logging.basicConfig(
         level=logging.INFO,
         filename=os.path.join(
@@ -104,3 +119,4 @@ if __name__ == "__main__":
     driver = uc.Chrome(options=options)
     driver.set_window_size(1920, 1080)
     main(driver)
+    driver.quit()

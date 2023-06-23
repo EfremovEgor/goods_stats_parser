@@ -31,7 +31,7 @@ def parse_search_results(
         frequency = list(srch.parent.parent.parent.parent.parent.children)[
             1
         ].text.strip()
-        frequency = frequency if frequency != "—" else -1
+        frequency = frequency if frequency != "—" else "0"
         positions = [
             val.text.strip() if val.text.strip() != "—" else None for val in lst
         ]
