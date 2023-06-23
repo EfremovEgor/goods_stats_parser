@@ -12,7 +12,7 @@ import logging
 import datetime
 import os
 
-from config import LOGIN_URL, BASE_URL, STARTING_ROW, AMOUNT_TO_PARSE
+from config import LOGIN_URL, BASE_URL, STARTING_ROW, AMOUNT_TO_PARSE, LOGIN, PASSWORD
 
 
 def initialize_directories_and_files():
@@ -34,9 +34,9 @@ def login(driver: uc.Chrome) -> None:
         WebDriverWait(driver, 300).until(
             EC.presence_of_element_located((By.NAME, "email"))
         )
-        driver.find_element(By.NAME, "email").send_keys("angrycat2000@inbox.ru")
+        driver.find_element(By.NAME, "email").send_keys(LOGIN)
         driver.find_element(By.CLASS_NAME, "btn-green").click()
-        driver.find_element(By.NAME, "password").send_keys("JkQ26dfdf23")
+        driver.find_element(By.NAME, "password").send_keys(PASSWORD)
         driver.find_elements(By.CLASS_NAME, "btn")[1].click()
     except Exception as ex:
         logging.error("Log in error", exc_info=True)
