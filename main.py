@@ -11,7 +11,6 @@ import csv
 import logging
 import datetime
 import os
-
 from config import LOGIN_URL, BASE_URL, STARTING_ROW, AMOUNT_TO_PARSE, LOGIN, PASSWORD
 
 
